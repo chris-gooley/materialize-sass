@@ -308,7 +308,8 @@
 		ampmclickable: true, // set am/pm button on itself
 		darktheme: false, // set to dark theme
 		twelvehour: true, // change to 12 hour AM/PM clock from 24 hour
-		vibrate: true // vibrate the device when dragging clock hand
+		vibrate: true, // vibrate the device when dragging clock hand
+		clickOutClose: true, // auto close when clicked outside of the clock
 	};
 
 	// Show or hide popover
@@ -401,6 +402,12 @@
 		// Hide when clicking or tabbing on any element except the clock and input
 		$doc.on('click.clockpicker.' + this.id + ' focusin.clockpicker.' + this.id, function (e) {
 			var target = $(e.target);
+
+			// Dont auto close if you click outside the clock
+			if (!this.clickOutClose) {
+				return;
+			}
+
 			if (target.closest(self.popover.find('.picker__wrap')).length === 0 && target.closest(self.input).length === 0) {
 				self.hide();
 			}
